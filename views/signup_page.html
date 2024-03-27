@@ -1,0 +1,55 @@
+{{ block "signup-page" . }}
+<!DOCTYPE html>
+<html lang="end">
+    <head>
+        <title>
+        Login page
+        </title>
+        <script src="https://unpkg.com/htmx.org/dist/htmx.min.js"></script>
+        <script>
+        document.addEventListener("DOMContentLoaded", (event) => {
+            document.body.addEventListener('htmx:beforeSwap', function(evt) {
+                if (
+                       evt.detail.xhr.status === 422 ||
+                       evt.detail.xhr.status === 401 ||
+                       evt.detail.xhr.status === 404
+                   ) {
+                    evt.detail.shouldSwap = true;
+                    evt.detail.isError = false;
+                }
+            });
+        })
+        </script>
+    </head>
+
+    <body>
+    {{ template "signup-form" .Form }}
+    </body>
+</html>
+{{ end }}
+
+{{ block "signup-form" . }}
+<form hx-swap="outerHTML" hx-post="/signup">
+    email <input
+      {{ if .Values.email }} value="{{ .Values.email }}" {{ end }}
+      type="email"
+      name="email"/>
+    password <input
+      {{ if .Values.password }} value="{{ .Values.password }}" {{ end }}
+      type="password"
+      name="password"/>
+    confirm password <input
+      {{ if .Values.passwordConfirm }} value="{{ .Values.passwordConfirm }}" {{ end }}
+      type="password"
+      name="passwordConfirm"/>
+
+    {{ if .Errors.email }}
+        <div style="color: red">{{ .Errors.email }}</div>
+    {{ end }}
+    {{ if .Errors.password }}
+        <div style="color: red">{{ .Errors.password }}</div>
+    {{ end }}
+    <button type="submit">Sign Up</button>
+</form>
+{{ end }}
+
