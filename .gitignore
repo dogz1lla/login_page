@@ -19,3 +19,6 @@ f you prefer the allow list template instead of the deny list, see community tem
 
 # Go workspace file
 go.work
+
+# swap files (vim?)
+*.swp
