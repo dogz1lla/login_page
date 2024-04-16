@@ -1,12 +1,11 @@
 package templating
 
-
 type LoginPage struct {
-    Form FormData
+	Form FormData
 }
 
 func NewLoginPage() LoginPage {
-    return LoginPage{
-        Form: NewFormData(),
-    }
+	return LoginPage{
+		Form: NewFormData(),
+	}
 }
